@@ -1,5 +1,11 @@
 import React from 'react';
 
-export default () => {
-  return <div>hello from alert</div>;
+import './Alert.css';
+
+export default ({ type, text }) => {
+  return (
+    <div className={`alert alert-${type} container mx-auto`} role="alert">
+      {text}
+    </div>
+  );
 };

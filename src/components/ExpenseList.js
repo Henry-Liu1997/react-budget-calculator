@@ -1,12 +1,30 @@
 import React from 'react';
+import { MdDelete } from 'react-icons/md';
 
 import ExpenseItem from './ExpenseItem';
 
-export default () => {
+export default ({ expenses, handleClear, handleDelete, handleEdit }) => {
   return (
     <div>
-      Hello from expense list
-      <ExpenseItem />
+      <ul className="list-group ">
+        {expenses.map((expense) => (
+          <ExpenseItem
+            expense={expense}
+            key={expense.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
+        ))}
+      </ul>
+      {expenses.length > 0 && (
+        <button
+          className="main-btn btn btn-danger mx-auto"
+          onClick={handleClear}
+        >
+          clear expenses
+          <MdDelete className="btn-icon ml-2" />
+        </button>
+      )}
     </div>
   );
 };
