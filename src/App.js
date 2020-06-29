@@ -1,26 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { v4 as uuid } from 'uuid';
 
-function App() {
+import ExpenseForm from './components/ExpenseForm';
+import ExpenseList from './components/ExpenseList';
+import Alert from './components/Alert';
+
+const initialExpenses = [
+  { id: uuid(), charge: 'rent', amount: 1600 },
+  { id: uuid(), charge: 'car payment', amount: 400 },
+  { id: uuid(), charge: 'grocery', amount: 200 },
+];
+console.log(initialExpenses);
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Alert />
+      <ExpenseForm />
+      <ExpenseList />
+    </>
   );
 }
-
-export default App;
