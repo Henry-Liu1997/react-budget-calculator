@@ -13,14 +13,14 @@ const initialExpenses = [
   { id: uuid(), charge: 'grocery', amount: 200 },
 ];
 
-const Context = React.createContext();
-
 export default function App() {
   // ******************** state values ********************
   const [expenses, setExpenses] = useState(initialExpenses);
   const [charge, setCharge] = useState();
   const [amount, setAmount] = useState();
   const [alert, setAlert] = useState({ show: false });
+  const [edit, setEdit] = useState(false);
+  const [id, setId] = useState(0);
 
   // ******************** functionality ********************
   // handle charge
@@ -44,15 +44,25 @@ export default function App() {
     e.preventDefault();
 
     if (charge && amount > 0) {
-      const newExpense = {
-        id: uuid(),
-        charge: charge,
-        amount: parseInt(amount),
-      };
-      setExpenses([...expenses, newExpense]);
+      if (edit) {
+        const newExpense = expenses.map((expense) =>
+          expense.id === id ? { ...expense, charge, amount } : expense
+        );
+        setExpenses(newExpense);
+        setEdit(false);
+        handleAlert({ type: 'success', text: 'item edited successfully' });
+      } else {
+        const newExpense = {
+          id: uuid(),
+          charge: charge,
+          amount: amount,
+        };
+        setExpenses([...expenses, newExpense]);
+        handleAlert({ type: 'success', text: 'item added successfully' });
+      }
+
       setAmount('');
       setCharge('');
-      handleAlert({ type: 'success', text: 'item added successfully' });
     } else {
       handleAlert({
         type: 'danger',
@@ -65,16 +75,22 @@ export default function App() {
   //handle clear
   const handleClear = () => {
     setExpenses([]);
+    handleAlert({ type: 'danger', text: 'all items deleted' });
   };
 
   //handle delete
   const handleDelete = (id) => {
     setExpenses(expenses.filter((expense) => expense.id !== id));
+    handleAlert({ type: 'danger', text: 'item deleted' });
   };
 
   // handle edit
   const handleEdit = (id) => {
-    console.log('handle edit');
+    const selectedExpense = expenses.find((expense) => expense.id === id);
+    setEdit(true);
+    setCharge(selectedExpense.charge);
+    setAmount(selectedExpense.amount);
+    setId(id);
   };
 
   return (
@@ -85,6 +101,7 @@ export default function App() {
         <ExpenseForm
           charge={charge}
           amount={amount}
+          edit={edit}
           handleAmount={handleAmount}
           handleCharge={handleCharge}
           handleSubmit={handleSubmit}
@@ -94,6 +111,7 @@ export default function App() {
           handleClear={handleClear}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          edit={edit}
         />
       </main>
       <h1 className="mt-5">
@@ -101,7 +119,7 @@ export default function App() {
         <span>
           $
           {expenses.reduce((acc, cur) => {
-            return acc + cur.amount;
+            return acc + parseInt(cur.amount);
           }, 0)}
         </span>
       </h1>

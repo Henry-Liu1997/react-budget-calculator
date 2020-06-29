@@ -2,7 +2,14 @@ import React from 'react';
 import { MdSend } from 'react-icons/md';
 
 export default (props) => {
-  const { charge, amount, handleCharge, handleAmount, handleSubmit } = props;
+  const {
+    charge,
+    amount,
+    edit,
+    handleCharge,
+    handleAmount,
+    handleSubmit,
+  } = props;
   return (
     <form className="container" onSubmit={handleSubmit}>
       <div className="row">
@@ -34,8 +41,13 @@ export default (props) => {
             onChange={handleAmount}
           />
         </div>
-        <button type="submit" className="btn btn-primary main-btn mx-auto mb-3">
-          submit <MdSend className="btn-icon ml-2" />
+        <button
+          type="submit"
+          className={`btn ${
+            edit ? 'btn-success' : 'btn-primary'
+          } main-btn mx-auto mb-3`}
+        >
+          {edit ? 'edit' : 'submit'} <MdSend className="btn-icon ml-2" />
         </button>
       </div>
     </form>

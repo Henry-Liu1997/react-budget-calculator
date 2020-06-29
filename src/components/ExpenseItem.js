@@ -14,7 +14,7 @@ export default ({ expense, handleDelete, handleEdit }) => {
         </div>
         <div className="col-4">
           <button className="edit-btn bg-white text-info btn-icon mr-3 ">
-            <MdEdit />
+            <MdEdit onClick={() => handleEdit(id)} />
           </button>
           <button className="delete-btn text-danger bg-white btn-icon">
             <MdDelete onClick={() => handleDelete(id)} />

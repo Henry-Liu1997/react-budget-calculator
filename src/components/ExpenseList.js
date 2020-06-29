@@ -3,7 +3,7 @@ import { MdDelete } from 'react-icons/md';
 
 import ExpenseItem from './ExpenseItem';
 
-export default ({ expenses, handleClear, handleDelete, handleEdit }) => {
+export default ({ expenses, edit, handleClear, handleDelete, handleEdit }) => {
   return (
     <div>
       <ul className="list-group ">
