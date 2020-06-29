@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import ExpenseForm from './components/ExpenseForm';
@@ -7,21 +7,29 @@ import Alert from './components/Alert';
 
 import './App.css';
 
-const initialExpenses = [
-  { id: uuid(), charge: 'rent', amount: 1600 },
-  { id: uuid(), charge: 'car payment', amount: 400 },
-  { id: uuid(), charge: 'grocery', amount: 200 },
-];
+// const initialExpenses = [
+//   { id: uuid(), charge: 'rent', amount: 1600 },
+//   { id: uuid(), charge: 'car payment', amount: 400 },
+//   { id: uuid(), charge: 'grocery', amount: 200 },
+// ];
+
+const initialExpenses = localStorage.getItem('expenses')
+  ? JSON.parse(localStorage.getItem('expenses'))
+  : [];
 
 export default function App() {
   // ******************** state values ********************
   const [expenses, setExpenses] = useState(initialExpenses);
-  const [charge, setCharge] = useState();
-  const [amount, setAmount] = useState();
+  const [charge, setCharge] = useState('');
+  const [amount, setAmount] = useState('');
   const [alert, setAlert] = useState({ show: false });
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(0);
 
+  // ******************** useEffect ********************
+  useEffect(() => {
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+  }, [expenses]);
   // ******************** functionality ********************
   // handle charge
   const handleCharge = (e) => {
@@ -116,7 +124,7 @@ export default function App() {
       </main>
       <h1 className="mt-5">
         total spending :
-        <span>
+        <span className="bg-danger text-white">
           $
           {expenses.reduce((acc, cur) => {
             return acc + parseInt(cur.amount);
