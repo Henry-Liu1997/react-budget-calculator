@@ -52,15 +52,6 @@ input {
   text-transform: inherit;
 }
 
-li {
-  transition: var(--transition);
-}
-
-li:hover {
-  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
-  transform: scale(1.04);
-}
-
 .btn {
   transition: var(--transition);
 }

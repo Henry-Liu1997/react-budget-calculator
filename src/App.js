@@ -7,12 +7,6 @@ import Alert from './components/Alert';
 
 import './App.css';
 
-// const initialExpenses = [
-//   { id: uuid(), charge: 'rent', amount: 1600 },
-//   { id: uuid(), charge: 'car payment', amount: 400 },
-//   { id: uuid(), charge: 'grocery', amount: 200 },
-// ];
-
 const initialExpenses = localStorage.getItem('expenses')
   ? JSON.parse(localStorage.getItem('expenses'))
   : [];
